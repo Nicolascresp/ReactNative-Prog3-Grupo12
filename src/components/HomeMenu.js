@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import home from "../screens/home" ;
 import Profile from '../screens/Profile';
-import Users from "../screens/Users";
 import NuevoPost from "../screens/NuevoPost";
+import UsuariosSearch from "../components/UsuariosSearch"
 
 const Tab = createBottomTabNavigator();
 
@@ -22,17 +22,17 @@ class HomeMenu extends Component {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={Profile}
+          name="Search"
+          component={UsuariosSearch}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="person" size={size} color={color} />
+              <Ionicons name="search" size={size} color={color} />
             ),
           }}
         />
-          <Tab.Screen
-          name="Users"
-          component={Users}
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="person" size={size} color={color} />
@@ -44,7 +44,7 @@ class HomeMenu extends Component {
           component={NuevoPost}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="person" size={size} color={color} />
+              <Ionicons name="create" size={size} color={color} />
             ),
           }}
         />

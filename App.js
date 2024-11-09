@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from "../PracticaUno - copia/src/screens/Login";
-import Register from "../PracticaUno - copia/src/screens/Register";
-import HomeMenu from "../PracticaUno - copia/src/components/HomeMenu";
+import Login from "../ReactNative-Prog3-Grupo12/src/screens/Login";
+import Register from "../ReactNative-Prog3-Grupo12/src/screens/Register";
+import HomeMenu from "../ReactNative-Prog3-Grupo12/src/components/HomeMenu";
 
 const Stack = createStackNavigator();
 

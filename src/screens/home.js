@@ -11,6 +11,7 @@ class Home extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>Pantalla Home de {user.userName}</Text>
+            
                 <CommentForm />
                 <Text style={styles.title}>Publicaciones</Text>
                 <Posts />
