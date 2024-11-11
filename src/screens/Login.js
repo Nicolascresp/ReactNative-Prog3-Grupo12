@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { auth } from "../firebase/config";
 
 class Login extends Component {
@@ -13,12 +12,9 @@ class Login extends Component {
     };
   }
 
-  async handleSubmit(email, password) {
+  handleSubmit(email, password) {
     auth.signInWithEmailAndPassword(email, password)
-      .then(async response => {
-        if (this.state.rememberMe) {
-          await AsyncStorage.setItem('userToken', response.user.uid); 
-        }
+      .then(response => {
         this.props.navigation.navigate("HomeMenu");
       })
       .catch(error => this.setState({ errorMsg: error.message }));

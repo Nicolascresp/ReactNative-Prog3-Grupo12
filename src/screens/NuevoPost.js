@@ -17,6 +17,7 @@ class NuevoPost extends Component {
     if (mensaje.trim() !== '' && user) {
       db.collection('posts').add({
         mensaje: mensaje,
+        owner: user,
         email: user.email,
         createdAt: new Date(),
       })

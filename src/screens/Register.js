@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { auth, db } from "../firebase/config";
 
 class Register extends Component {
@@ -44,13 +44,11 @@ class Register extends Component {
     }
   };
 
-  toggleRememberMe = () => {
-    this.setState({ rememberMe: !this.state.rememberMe });
-  };
+
 
   render() {
     const { navigation } = this.props;
-    const { errorMsg, email, userName, password, bio, rememberMe } = this.state;
+    const { errorMsg, email, userName, password, bio } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Pantalla de Registro</Text>
@@ -85,13 +83,7 @@ class Register extends Component {
           multiline={true}
           numberOfLines={4}
         />
-        <View style={styles.rememberMeContainer}>
-          <Text>Recordarme</Text>
-          <Switch
-            value={rememberMe}
-            onValueChange={this.toggleRememberMe}
-          />
-        </View>
+
         <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
           <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>

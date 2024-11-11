@@ -22,7 +22,7 @@ class HomeMenu extends Component {
           }}
         />
         <Tab.Screen
-          name="Search"
+          name="Users"
           component={UsuariosSearch}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -40,7 +40,7 @@ class HomeMenu extends Component {
           }}
         />
         <Tab.Screen
-          name="NuevoPost"
+          name="Create Post"
           component={NuevoPost}
           options={{
             tabBarIcon: ({ color, size }) => (
