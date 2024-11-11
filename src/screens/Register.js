@@ -30,8 +30,9 @@ class Register extends Component {
               this.props.navigation.navigate("Login");
             })
             .catch((e) => {
+              console.log(e)
               console.error("Error al agregar el usuario a la base de datos: ", e.message);
-              this.setState({ errorMsg: "Error al guardar en la base de datos" });
+              this.setState({ errorMsg: e.message });
             });
           }
         })

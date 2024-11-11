@@ -14,11 +14,12 @@ class NuevoPost extends Component {
     const { mensaje } = this.state;
     const user = auth.currentUser;
 
-    if (mensaje.trim() !== '' && user) {
+
+    if (mensaje.trim() !== '') {
       db.collection('posts').add({
         mensaje: mensaje,
-        owner: user,
-        email: user.email,
+        owner: user.email,
+        likes: [],
         createdAt: new Date(),
       })
       .then(() => {

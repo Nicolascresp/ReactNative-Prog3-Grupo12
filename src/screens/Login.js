@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Switch, Image } from 'react-native';
 import { auth } from "../firebase/config";
 
 class Login extends Component {
@@ -20,13 +20,14 @@ class Login extends Component {
       .catch(error => this.setState({ errorMsg: error.message }));
   }
   
-componentDidMount(){
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      this.props.navigation.navigate("HomeMenu")
-    }
-  })
-}
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.props.navigation.navigate("HomeMenu");
+      }
+    });
+  }
+
   toggleRememberMe = () => {
     this.setState({ rememberMe: !this.state.rememberMe });
   }
@@ -35,6 +36,7 @@ componentDidMount(){
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
+        <Image source={require("../../assets/logoReact.png")} style={styles.logo} />
         <Text style={styles.title}>Pantalla de Login</Text>
         <TextInput
           style={styles.field}
@@ -70,14 +72,54 @@ componentDidMount(){
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'flex-start', alignItems: 'center', marginTop: 40 },
-  title: { fontSize: 20, marginBottom: 20 },
-  field: { width: '80%', padding: 10, borderColor: '#ccc', borderWidth: 1, borderRadius: 5, marginBottom: 15 },
-  button: { backgroundColor: '#6200ea', padding: 10, borderRadius: 5, marginTop: 10 },
-  buttonText: { color: 'white', fontSize: 16 },
-  linkButton: { marginTop: 10 },
-  linkText: { color: '#6200ea', fontSize: 16 },
-  rememberMeContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 15 },
+  container: { 
+    flex: 1, 
+    justifyContent: 'flex-start', 
+    alignItems: 'center', 
+    marginTop: 40,
+    backgroundColor: '#f4f4f4'
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+  },
+  title: { 
+    fontSize: 20, 
+    marginBottom: 20,
+    color: '#FF9800' 
+  },
+  field: { 
+    width: '80%', 
+    padding: 10, 
+    borderColor: '#ccc', 
+    borderWidth: 1, 
+    borderRadius: 5, 
+    marginBottom: 15 
+  },
+  button: { 
+    backgroundColor: '#FF9800', 
+    padding: 10, 
+    borderRadius: 5, 
+    marginTop: 10 
+  },
+  buttonText: { 
+    color: 'white', 
+    fontSize: 16 
+  },
+  linkButton: { 
+    marginTop: 10 
+  },
+  linkText: { 
+    color: '#6200ea', 
+    fontSize: 16 
+  },
+  rememberMeContainer: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    marginBottom: 15 
+  },
 });
 
 export default Login;
+
