@@ -1,125 +1,76 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Switch, Image } from 'react-native';
-import { auth } from "../firebase/config";
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { auth } from '../firebase/config';
 
-class Login extends Component {
+
+export default class Login extends Component {
+
   constructor(props) {
-    super(props);
+    super(props)
+
     this.state = {
       email: "",
-      password: "",
-      rememberMe: false,
-    };
+      password: ""
+    }
   }
 
-  handleSubmit(email, password) {
-    auth.signInWithEmailAndPassword(email, password)
-      .then(response => {
-        this.props.navigation.navigate("HomeMenu");
-      })
-      .catch(error => this.setState({ errorMsg: error.message }));
-  }
-  
-  componentDidMount() {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.props.navigation.navigate("HomeMenu");
-      }
-    });
+
+  login(email,password){
+    auth.signInWithEmailAndPassword(email,password)
+    .then(response => {
+      this.setState({loggedIn : true})
+    })
+    .catch(error => {
+      console.log(error.message); 
+      this.setState({ error: "Credenciales Invalidas: " + error.message });
+   });
+   
   }
 
-  toggleRememberMe = () => {
-    this.setState({ rememberMe: !this.state.rememberMe });
-  }
 
   render() {
-    const { navigation } = this.props;
     return (
-      <View style={styles.container}>
-        <Image source={require("../../assets/logoReact.png")} style={styles.logo} />
-        <Text style={styles.title}>Pantalla de Login</Text>
-        <TextInput
-          style={styles.field}
-          keyboardType="email-address"
-          placeholder="email"
-          onChangeText={text => this.setState({ email: text })}
-          value={this.state.email}
-        />
-        <TextInput
-          style={styles.field}
-          keyboardType="default"
-          placeholder="password"
-          secureTextEntry={true}
-          onChangeText={text => this.setState({ password: text })}
-          value={this.state.password}
-        />
-        <View style={styles.rememberMeContainer}>
-          <Text>Recordarme</Text>
-          <Switch
-            value={this.state.rememberMe}
-            onValueChange={this.toggleRememberMe}
-          />
-        </View>
-        <TouchableOpacity style={styles.button} onPress={() => this.handleSubmit(this.state.email, this.state.password)}>
-          <Text style={styles.buttonText}>Ingresar</Text>
+      <View>
+        <Text>Ingresar</Text>
+
+                <TextInput 
+
+                  keyboardType='email-address'
+                  placeholder='email'
+                  onChangeText={text => this.setState({ email: text })}
+                  value={this.state.email}
+
+                />
+
+                <TextInput 
+
+                  keyboardType='default'
+                  placeholder='password'
+                  secureTextEntry={true}
+                  onChangeText={text => this.setState({ password: text })}
+                  value={this.state.password}
+
+                />
+
+
+        <TouchableOpacity
+          onPress={() => {
+            this.login(this.state.email, this.state.password);
+            this.props.navigation.navigate("HomeMenu");
+          }}          
+        >
+          <Text>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.linkText}>Ir al Register</Text>
+
+
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("Register")}
+        >
+          <Text>No tengo cuenta</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    justifyContent: 'flex-start', 
-    alignItems: 'center', 
-    marginTop: 40,
-    backgroundColor: '#f4f4f4'
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-  },
-  title: { 
-    fontSize: 20, 
-    marginBottom: 20,
-    color: '#FF9800' 
-  },
-  field: { 
-    width: '80%', 
-    padding: 10, 
-    borderColor: '#ccc', 
-    borderWidth: 1, 
-    borderRadius: 5, 
-    marginBottom: 15 
-  },
-  button: { 
-    backgroundColor: '#FF9800', 
-    padding: 10, 
-    borderRadius: 5, 
-    marginTop: 10 
-  },
-  buttonText: { 
-    color: 'white', 
-    fontSize: 16 
-  },
-  linkButton: { 
-    marginTop: 10 
-  },
-  linkText: { 
-    color: '#6200ea', 
-    fontSize: 16 
-  },
-  rememberMeContainer: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    marginBottom: 15 
-  },
-});
-
-export default Login;
 
