@@ -1,76 +1,117 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { auth } from '../firebase/config';
-
 
 export default class Login extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       email: "",
-      password: ""
-    }
+      password: "",
+      error: ""
+    };
   }
 
-
-  login(email,password){
-    auth.signInWithEmailAndPassword(email,password)
-    .then(response => {
-      this.setState({loggedIn : true})
-    })
-    .catch(error => {
-      console.log(error.message); 
-      this.setState({ error: "Credenciales Invalidas: " + error.message });
-   });
-   
+  login(email, password) {
+    auth.signInWithEmailAndPassword(email, password)
+      .then(response => {
+        this.setState({ loggedIn: true });
+        this.props.navigation.navigate("HomeMenu");
+      })
+      .catch(error => {
+        console.log(error.message);
+        this.setState({ error: "Invalidas: " + error.message });
+      });
   }
-
 
   render() {
     return (
-      <View>
-        <Text>Ingresar</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Ingresar</Text>
 
-                <TextInput 
+        <TextInput
+          style={styles.input}
+          keyboardType='email-address'
+          placeholder='Email'
+          onChangeText={text => this.setState({ email: text })}
+          value={this.state.email}
+        />
 
-                  keyboardType='email-address'
-                  placeholder='email'
-                  onChangeText={text => this.setState({ email: text })}
-                  value={this.state.email}
-
-                />
-
-                <TextInput 
-
-                  keyboardType='default'
-                  placeholder='password'
-                  secureTextEntry={true}
-                  onChangeText={text => this.setState({ password: text })}
-                  value={this.state.password}
-
-                />
-
+        <TextInput
+          style={styles.input}
+          keyboardType='default'
+          placeholder='Contraseña'
+          secureTextEntry={true}
+          onChangeText={text => this.setState({ password: text })}
+          value={this.state.password}
+        />
 
         <TouchableOpacity
-          onPress={() => {
-            this.login(this.state.email, this.state.password);
-            this.props.navigation.navigate("HomeMenu");
-          }}          
+          style={styles.loginButton}
+          onPress={() => this.login(this.state.email, this.state.password)}
         >
-          <Text>Login</Text>
+          <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
 
+        <Text>{this.state.error}</Text>
 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate("Register")}
         >
-          <Text>No tengo cuenta</Text>
+          <Text style={styles.registerLink}>No tengo cuenta</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 20,
+  },
+  input: {
+    width: '90%',
+    padding: 15,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 15,
+    backgroundColor: '#fff',
+  },
+  loginButton: {
+    width: '90%',
+    padding: 15,
+    backgroundColor: '#4CAF50',
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: 10,
+    textAlign: 'center',
+  },
+  registerLink: {
+    color: '#1E90FF',
+    marginTop: 20,
+    fontSize: 16,
+  },
+});
