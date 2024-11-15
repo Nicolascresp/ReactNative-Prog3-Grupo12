@@ -22,7 +22,7 @@ export default class Login extends Component {
       })
       .catch(error => {
         console.log(error.message);
-        this.setState({ error: "Invalidas: " + error.message });
+        this.setState({ error: "Credenciales no existentes" });
       });
   }
 
