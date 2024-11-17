@@ -24,6 +24,7 @@ class NuevoPost extends Component {
       })
       .then(() => {
         this.setState({ mensaje: '' });
+        this.props.navigation.navigate('Profile'); 
       })
       .catch((error) => {
         console.error("Error al crear el post: ", error);

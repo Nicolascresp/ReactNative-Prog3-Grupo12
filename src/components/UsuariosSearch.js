@@ -40,6 +40,25 @@ class UsuariosSearch extends Component {
         console.error("Error al obtener usuarios:", error);
       });
   }
+  handleSubmit = () => {
+    const { mensaje } = this.state;
+    const user = auth.currentUser;
+  
+    if (mensaje.trim() !== '') {
+      db.collection('posts').add({
+        mensaje: mensaje,
+        owner: user.email,
+        likes: [],
+        createdAt: new Date(),
+      })
+      .then(() => {
+        this.setState({ mensaje: '' });
+      })
+      .catch((error) => {
+        console.error("Error al crear el post: ");
+      });
+    }
+  };
 
   render() {
     const { filteredUsers } = this.state;
