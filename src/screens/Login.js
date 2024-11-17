@@ -26,6 +26,14 @@ export default class Login extends Component {
       });
   }
 
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.props.navigation.navigate("HomeMenu");
+      }
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
