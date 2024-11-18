@@ -59,7 +59,7 @@ export class Posts extends Component {
                 {this.state.loading ?
                     <ActivityIndicator size="large" color="#0000ff" /> :
                     <FlatList
-                        data={this.state.posts}
+                        data={this.props.posts}
                         keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) => <Text style={styles.username}>{item.data.mensaje}</Text>}
                     />

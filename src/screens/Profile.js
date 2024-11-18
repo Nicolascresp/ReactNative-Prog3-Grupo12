@@ -53,23 +53,28 @@ componentDidMount() {
     const { navigation } = this.props;
     return (
     <>
-        <View style={styles.container}>
-        <Text style={styles.title}>Perfil</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.buttonText}>Desloguearse</Text>
-        </TouchableOpacity>
-        </View>
-        <Text style={styles.mail}> Usuario: {this.state.email}</Text>
+        
+        <View style={styles.header}>
+                <Text style={styles.profile}>Mi Perfil</Text>
+                <TouchableOpacity style={styles.logoutButton} onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.logoutText}>Logout</Text>
+                </TouchableOpacity>
+            </View>
+
+        <View style={styles.infoUsuario}>
+        <Text style={styles.mail}> Usuario: {this.state.user} </Text>
+        <Text style={styles.mail}> Email: {this.state.email} </Text>
         <Text style={styles.cantidadPosteos}>Cantidad de posteos: {this.state.posts.length}</Text>
+        </View>
                 {this.state.posts.length === 0 ? (
-                    <View style={styles.cantidadPosteos}>
-                        <Text>No hay ningun post subido</Text>
+                    <View style={styles.ceroPosteos}>
+                        <Text style={styles.textoCeroPosteos}>No hay ningún post subido</Text>
                     </View>
                 ) : (
                     <FlatList
                         data={this.state.posts}
                         keyExtractor={(item) => item.id}
-                        renderItem={({ item }) => <Posts post={item} condicion={true} />}
+                        renderItem={({ item }) => <Posts posts={[item]} condicion={true} />}
                     />
                 )}
       </>
@@ -78,12 +83,15 @@ componentDidMount() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  title: { fontSize: 20, marginBottom: 20 },
-  button: { backgroundColor: '#6200ea', padding: 10, borderRadius: 5 },
-  buttonText: { color: 'white', fontSize: 16 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10, backgroundColor: '#f8f9fa' },
+  profile: { fontSize: 25, marginBottom: 20 , fontWeight: 'bold', textAlign: 'center', flex: 1},
+  logoutButton: { backgroundColor: '#6200ea', padding: 10, borderRadius: 5 },
+  logoutText: {color: 'white', fontSize: 16, fontWeight: 'bold'} ,
   mail: {fontSize: 20 , color: 'blue'},
-  cantidadPosteos: {fontSize: 20 , color: 'blue'},
+  cantidadPosteos: {fontSize: 20 , color: 'blue', marginTop: 5},
+  infoUsuario: {alignSelf: 'flex-start', padding: 10,},
+ceroPosteos: {flex: 1, justifyContent: 'center', alignItems: 'center',},
+textoCeroPosteos: { fontSize: 16,color: 'gray',},
 });
 
 export default Profile;
