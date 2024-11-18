@@ -21,6 +21,7 @@ class NuevoPost extends Component {
         owner: user.email,
         likes: [],
         createdAt: new Date(),
+        
       })
       .then(() => {
         this.setState({ mensaje: '' });
